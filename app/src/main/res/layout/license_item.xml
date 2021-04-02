@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="licenseData"
+            type="com.example.locationfinder.ui.setting.license.LicenseFragment.LicenseData" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:layout_margin="8dp"
+        android:background="@drawable/round_corner2">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/tool_title_text"
+            android:text="@{licenseData.title}"/>
+
+        <View
+            android:id="@+id/divider_view"
+            android:layout_width="30dp"
+            android:layout_height="5dp"
+            android:layout_margin="8dp"
+            android:background="@drawable/round_corner"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+        <TextView
+            android:id="@+id/license_contents"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/divider_view"
+            tools:layout_editor_absoluteX="16dp"
+            android:layout_marginTop="16dp"
+            tools:text="@string/tool_content_text"
+            android:text="@{licenseData.contents}"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

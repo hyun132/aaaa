@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/mapFragment"
+        android:title="@string/bottom_nav_menu1"
+        android:icon="@drawable/ic_add_location"/>
+    <item
+        android:id="@+id/locationFragment"
+        android:title="@string/bottom_nav_menu2"
+        android:icon="@drawable/ic_savelist"/>
+    <item
+        android:id="@+id/settingFragment"
+        android:title="@string/bottom_nav_menu3"
+        android:icon="@drawable/ic_setting"/>
+
+</menu>

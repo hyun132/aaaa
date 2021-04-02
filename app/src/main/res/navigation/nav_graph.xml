@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/mapFragment">
+
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="com.example.locationfinder.ui.map.MapFragment"
+        android:label="@string/bottom_nav_menu1">
+        <action
+            android:id="@+id/action_mapFragment_to_settingFragment"
+            app:destination="@id/settingFragment" />
+        <action
+            android:id="@+id/action_mapFragment_to_locationFragment"
+            app:destination="@id/locationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="com.example.locationfinder.ui.setting.SettingFragment"
+        android:label="@string/bottom_nav_menu3">
+        <action
+            android:id="@+id/action_settingFragment_to_licenseFragment"
+            app:destination="@id/licenseFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/locationFragment"
+        android:name="com.example.locationfinder.ui.location.LocationFragment"
+        android:label="@string/bottom_nav_menu2" />
+    <fragment
+        android:id="@+id/licenseFragment"
+        android:name="com.example.locationfinder.ui.setting.license.LicenseFragment"
+        android:label="@string/open_source_license_title" />
+</navigation>

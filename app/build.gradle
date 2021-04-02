@@ -1,0 +1,174 @@
+apply plugin: 'com.android.application'
+
+/* kotlin plugin */
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.3"
+
+    defaultConfig {
+        applicationId "com.example.locationfinder"
+        minSdkVersion 25
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+        manifestPlaceholders = [
+                'appAuthRedirectScheme': 'net.openid.appauthdemo'
+        ]
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    dataBinding {
+        enabled = true
+    }
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation "androidx.core:core-ktx:$core_ktx_version"
+    implementation "androidx.appcompat:appcompat:$appcompat_version"
+    implementation "androidx.constraintlayout:constraintlayout:$constraintlayout_version"
+    implementation "androidx.legacy:legacy-support-v4:$support_v4"
+
+    /* Support Design*/
+    implementation "com.google.android.material:material:$material_ver"
+
+    /* Retrofit*/
+    implementation("com.squareup.retrofit2:retrofit:$retrofit_version") {
+        exclude module: 'okhttp'
+    }
+
+    implementation "com.google.code.gson:gson:$gson_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
+    implementation "commons-io:commons-io:$commons_io_version"
+
+    /* Kotlin MVVM*/
+    implementation "org.koin:koin-androidx-scope:$koin_version"
+    implementation "org.koin:koin-androidx-viewmodel:$koin_version"
+
+    /* RxAndroid*/
+    implementation "io.reactivex.rxjava2:rxandroid:$rx_android_version"
+    implementation "io.reactivex.rxjava2:rxjava:$rx_java_version"
+    implementation "io.reactivex.rxjava2:rxkotlin:$rx_kotlin_version"
+    implementation "com.jakewharton.rxbinding3:rxbinding:$rx_Binding_version"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$rx_adapter"
+
+    /* room*/
+    implementation "androidx.room:room-runtime:$room_version"
+    implementation "androidx.appcompat:appcompat:$appcompat_version"
+    implementation "androidx.constraintlayout:constraintlayout:$constraintlayout_version"
+    implementation "androidx.room:room-rxjava2:$room_rxjava2"
+
+    kapt "androidx.room:room-compiler:$room_version"
+    kapt "android.arch.persistence.room:compiler:$room_testing"
+    androidTestImplementation "android.arch.persistence.room:testing:$room_testing"
+
+    /* preference */
+    implementation "androidx.preference:preference:$preference"
+
+    /* Lifecycle components*/
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-viewmodel:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-runtime:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
+
+    /* glide */
+    implementation "com.github.bumptech.glide:glide:$glide_version"
+
+    /* Google Map */
+    implementation "com.google.android.gms:play-services-maps:$google_maps"
+    implementation "com.google.android.gms:play-services-location:$google_location"
+
+    /* joda time*/
+    implementation "net.danlew:android.joda:$joda_version"
+
+    /* Paging*/
+    implementation "android.arch.paging:runtime:$paging"
+
+    /* Arch Components*/
+    implementation "android.arch.lifecycle:extensions:$arch_ext"
+
+    /* WorkManager*/
+    implementation "android.arch.work:work-runtime:$work_version"
+    implementation "androidx.work:work-testing:$work_testing"
+
+    /* Testing-only dependencies*/
+    androidTestImplementation "junit:junit:$junit_version"
+    androidTestImplementation "android.arch.work:work-testing:$work_version"
+    androidTestImplementation "androidx.arch.core:core-testing:$core_testing_version"
+    androidTestImplementation "androidx.test:core:$core_version"
+    androidTestImplementation "androidx.test:core-ktx:$core_version"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
+    androidTestImplementation "androidx.test.espresso:espresso-contrib:$espresso_version"
+    androidTestImplementation "androidx.test.espresso:espresso-intents:$espresso_version"
+    androidTestImplementation "androidx.test.ext:junit:$ext_jUnit_version"
+    androidTestImplementation "androidx.test.ext:junit-ktx:$ext_jUnit_version"
+    androidTestImplementation "androidx.test:rules:$rules_version"
+    androidTestImplementation "androidx.test:runner:$runner_version"
+    androidTestImplementation "androidx.fragment:fragment-testing:$fragment_version"
+    androidTestImplementation "androidx.test.espresso:espresso-web:$espresso_web_version"
+
+    androidTestUtil 'androidx.test:orchestrator:1.3.0'
+
+    implementation "androidx.fragment:fragment:$fragment_version"
+    implementation "androidx.fragment:fragment-ktx:$fragment_version"
+
+    /* work manager */
+    implementation "androidx.work:work-runtime:$worker"
+
+    /* crashlytics */
+    implementation "com.google.firebase:firebase-crashlytics:$crashlytics_version"
+
+    /* FCM*/
+    implementation "com.google.firebase:firebase-core:$firebase_core_version"
+    implementation "com.google.firebase:firebase-messaging:$fcm_version"
+
+    /* Badge Count*/
+    implementation "me.leolin:ShortcutBadger:$shortcutbadger_version"
+
+    /* oauth2.0 */
+    implementation "net.openid:appauth:$appauth_version"
+
+    /*for App Bundle #1 */
+    // This dependency is downloaded from the Google’s Maven repository.
+    // So, make sure you also include that repository in your project's build.gradle file.
+    implementation "com.google.android.play:core:$play_version"
+
+    //lottie.txt
+    implementation "com.airbnb.android:lottie:3.6.1"
+
+    def navigationVersion = "2.3.4"
+    //navigation
+    implementation "androidx.navigation:navigation-fragment-ktx:$navigationVersion"
+    implementation "androidx.navigation:navigation-ui-ktx:$navigationVersion"
+
+    implementation 'com.google.android.material:material:1.4.0-alpha01'
+
+
+    // Kotlin Extensions and Coroutines support for Room
+    implementation "androidx.room:room-ktx:2.2.6"
+
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.3'
+
+    implementation 'com.google.android.material:material:1.4.0-alpha01'
+}
