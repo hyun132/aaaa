@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -16,22 +17,26 @@ import com.example.locationfinder.db.McItemEntity
  * LocationRecyclerviewAdapter
  */
 class LocationRecyclerviewAdapter :
-    RecyclerView.Adapter<LocationRecyclerviewAdapter.LocationItemViewHolder>() {
+    PagedListAdapter<McItemEntity, LocationRecyclerviewAdapter.LocationItemViewHolder>(
+        differCallback
+    ) {
 
     interface LikedClick {
-        fun onClick(view: View, item: McItemEntity)
+        fun onClick(view: View, item:McItemEntity)
     }
 
     var likedClick: LikedClick? = null
 
-    private val differCallback = object : DiffUtil.ItemCallback<McItemEntity>() {
-        override fun areItemsTheSame(oldItem: McItemEntity, newItem: McItemEntity): Boolean {
-            Log.d("log : ","ItemChanged $newItem")
-            return oldItem.id == newItem.id
-        }
+    companion object {
+        private val differCallback = object : DiffUtil.ItemCallback<McItemEntity>() {
+            override fun areItemsTheSame(oldItem: McItemEntity, newItem: McItemEntity): Boolean {
+                Log.d("log : ", "ItemChanged $newItem")
+                return (oldItem.id == newItem.id)
+            }
 
-        override fun areContentsTheSame(oldItem: McItemEntity, newItem: McItemEntity): Boolean {
-            return oldItem == newItem
+            override fun areContentsTheSame(oldItem: McItemEntity, newItem: McItemEntity): Boolean {
+                return oldItem == newItem
+            }
         }
     }
 
@@ -51,13 +56,16 @@ class LocationRecyclerviewAdapter :
         position: Int
     ) {
         val item = differ.currentList[position]
-        holder.itemView.setOnClickListener {
-            onItemClickListener?.let { it(item) }
+        item?.let {
+            holder.itemView.setOnClickListener {
+                onItemClickListener?.let { it(item) }
+            }
+            holder.itemView.findViewById<ImageView>(R.id.iv_liked).setOnClickListener { v ->
+                likedClick?.onClick(v, item)
+            }
+            holder.bind(item)
         }
-        holder.itemView.findViewById<ImageView>(R.id.iv_liked).setOnClickListener { v ->
-            likedClick?.onClick(v, differ.currentList[position])
-        }
-        holder.bind(item)
+
     }
 
     override fun getItemCount(): Int = differ.currentList.size

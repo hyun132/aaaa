@@ -74,7 +74,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:liked_src="@{mcItemEntity.favorite}" />
+            android:src="@{mcItemEntity.favorite ? @drawable/ic_yellow_star : @drawable/ic_gray_star}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

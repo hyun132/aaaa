@@ -66,6 +66,10 @@ class SearchFragment :
                 is SearchResult.Success -> {
                     response.data?.let { searchResponse ->
                         searchRecyclerviewAdapter.differ.submitList(searchResponse.documents)
+
+//                        for (item in searchResponse.documents){
+//                            vm.saveItem(item.mapToEntity())
+//                        }
                     }
                 }
                 is SearchResult.Error -> {

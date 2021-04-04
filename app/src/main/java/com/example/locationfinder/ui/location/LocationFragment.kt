@@ -10,6 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.paging.PagedList
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -44,30 +45,36 @@ class LocationFragment :
         super.onViewCreated(view, savedInstanceState)
 
 //        locationRecyclerviewAdapter = LocationRecyclerviewAdapter()
+//        vm.pagedList()
+//        vm.savedEntityList
         locationRecyclerviewAdapter.likedClick = object : LocationRecyclerviewAdapter.LikedClick {
-            override fun onClick(view: View, item: McItemEntity) {
-                if (item.favorite) {
-                    view.findViewById<ImageView>(R.id.iv_liked)
-                        .setImageResource(R.drawable.ic_gray_star)
-                } else {
-                    view.findViewById<ImageView>(R.id.iv_liked)
-                        .setImageResource(R.drawable.ic_yellow_star)
-                }
-                item.favorite = !item.favorite
-                vm.updateMcItemEntity(item)
+            override fun onClick(view: View, item:McItemEntity) {
+                vm.handleClickFavoritButtonEvent(item)
+                locationRecyclerviewAdapter.differ.submitList(vm.savedList.value)
             }
         }
+
 
         initRecyclerview()
         searchDialogSetting()
 
-        vm.savedEntityList.observe(viewLifecycleOwner, { list ->
+        vm.savedList.observe(viewLifecycleOwner,{list ->
             binding().emptyListBackground.visibility = View.VISIBLE
-            if (list.isNotEmpty()) {
+            if (!list.isNullOrEmpty()) {
                 locationRecyclerviewAdapter.differ.submitList(list)
                 binding().emptyListBackground.visibility = View.GONE
             }
         })
+
+//        vm.pagedList.observe(viewLifecycleOwner, { list ->
+//            binding().emptyListBackground.visibility = View.VISIBLE
+//            if (!list.isNullOrEmpty()) {
+//                locationRecyclerviewAdapter.differ.submitList(list)
+//                binding().emptyListBackground.visibility = View.GONE
+//            }
+//        })
+
+//        vm.pagedList.observe(viewLifecycleOwner, PagedList(locationRecyclerviewAdapter::submitList))
 
         binding().apply {
             viewModel = vm
@@ -81,22 +88,27 @@ class LocationFragment :
 
     private fun setRandomPick() {
         binding().randomPickButton.setOnClickListener {
-            var savedItems = vm.savedResult.value
-            if (savedItems != null) {
-                val num = Random.nextInt(savedItems.size)
-                val title = dialog.findViewById<TextView>(R.id.edit)
-                title.apply {
-                    text = savedItems[num].placeName
-                    animation = anim
+            vm.savedList.let {
+                val list = it.value
+                if (list != null) {
+                    if (list.isNotEmpty()) {
+                        val num = Random.nextInt(list.size)
+                        val title = dialog.findViewById<TextView>(R.id.edit)
+                        title.apply {
+                            text = list[num]?.placeName
+                            animation = anim
+                        }
+                        dialog.show()
+                        anim.start()
+                    } else {
+                        Toast.makeText(
+                            requireContext(),
+                            getString(R.string.inform_no_saved_list),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+
                 }
-                dialog.show()
-                anim.start()
-            } else {
-                Toast.makeText(
-                    requireContext(),
-                    getString(R.string.inform_no_saved_list),
-                    Toast.LENGTH_SHORT
-                ).show()
             }
         }
     }

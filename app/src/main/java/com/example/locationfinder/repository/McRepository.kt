@@ -3,6 +3,9 @@ package com.example.locationfinder.repository
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.paging.Config
+import androidx.paging.PagedList
+import androidx.paging.toLiveData
 import com.example.locationfinder.api.McLocationService
 import com.example.locationfinder.db.McDatabase
 import com.example.locationfinder.db.McItemEntity
@@ -30,10 +33,11 @@ class McRepository(db: McDatabase) {
     }
 
     fun updateLocation(mcItemEntity: McItemEntity):Int {
-        var returnValue=0
+        var returnValue= 0
         es.single {
-            returnValue = dao.updateLocation(mcItemEntity)
+            returnValue=dao.updateLocation(mcItemEntity)
         }
+        Log.d("updateLocation : ", "$returnValue saved")
         return returnValue
     }
 
@@ -53,9 +57,20 @@ class McRepository(db: McDatabase) {
 //        return data
 //    }
 
-    fun getAllSavedLocation(): LiveData<List<McItemEntity>> {
-        return dao.getSavedLocation()
+//    fun getAllSavedLocation(): LiveData<List<McItemEntity>> {
+//        return dao.getSavedLocation()
+//    }
+
+    private val myPagingConfig = Config(
+        pageSize = 20,
+        prefetchDistance = 40,
+        enablePlaceholders = true
+    )
+
+    fun getAllPagedLocation():LiveData<PagedList<McItemEntity>>{
+        return dao.getSavedLocation().toLiveData(config = myPagingConfig)
     }
+
 
     fun deleteAllSavedLocation():Int {
         var returnValue=0

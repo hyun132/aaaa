@@ -1,6 +1,7 @@
 package com.example.locationfinder.db
 
 import androidx.lifecycle.LiveData
+import androidx.paging.DataSource
 import androidx.room.*
 
 /**
@@ -15,7 +16,8 @@ interface McLocationDao {
     fun deleteLocation(mcItemEntity: McItemEntity) :Int
 
     @Query("select * from item_db")
-    fun getSavedLocation(): LiveData<List<McItemEntity>>
+    fun getSavedLocation(): DataSource.Factory<Int, McItemEntity>
+//    fun getSavedLocation(): LiveData<List<McItemEntity>>
 
     @Query("Delete from item_db")
     fun deleteAllSavedLocation():Int
